@@ -37,27 +37,32 @@ class MainContent extends React.Component {
             )
     }
 
-    componentDidUpdate() {
-        let path = window.location.pathname !== '/' ? window.location.pathname : '';
-        
-        let url = "http://localhost:8080/path" + path;
+    componentDidUpdate(prevState) {
 
-        fetch(url)
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    this.setState({
-                        content: result
-                    })
-                },
-                (error) => {
-                    console.log(error);
-                }
-            )
+        if(window.location.pathname !== prevState.location.pathname) {
+
+            let path = window.location.pathname !== '/' ? window.location.pathname : '';
+        
+            let url = "http://localhost:8080/path" + path;
+
+            fetch(url)
+                .then(res => res.json())
+                .then(
+                    (result) => {
+                        this.setState({
+                            content: result
+                        })
+                    },
+                    (error) => {
+                        console.log(error);
+                    }
+                )
+        }
+
     }
 
     render() {
-        
+
         const renderContent = () => {
             return this.state.content.map((item) => 
                 (item.name ? <DisplayContent key={item.name} value={item.name} type={item.type} /> : <FileContent key={item.fileName} filename={item.fileName}/>)

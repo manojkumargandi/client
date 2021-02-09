@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 import MainContent from './components/mainContent';
@@ -7,8 +6,7 @@ import MainContent from './components/mainContent';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Redirect
+  Route
 } from 'react-router-dom';
 
 class App extends React.Component {
@@ -17,7 +15,7 @@ class App extends React.Component {
       <Router>
         <div>
           <Switch>
-            <Route path="/*" children={<MainContent />} />
+            <Route exact path="/*" children={(props) => <MainContent {...props}/>} />
           </Switch>
         </div>
       </Router>
